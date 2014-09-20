@@ -1,3 +1,6 @@
+package Piece;
+import Etc.ChessBoard;
+
 
 public class Night extends Piece{
 

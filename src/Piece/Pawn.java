@@ -1,12 +1,12 @@
+package Piece;
 import java.io.IOException;
-import java.util.LinkedList;
 
+import Etc.ChessBoard;
+import Etc.PawnPromotionValue;
+import Exceptions.AttackAllianceExecption;
 
 public class Pawn extends Piece{
 	private boolean isTwoBlockMove;
-	private boolean canKilld;
-	private LinkedList<Integer> canKill;
-	private int[][] canMove;
 	
 	public Pawn(int x, int y, String color) {
 		isTwoBlockMove = true;
@@ -33,12 +33,8 @@ public class Pawn extends Piece{
 	 * 3. 내 말이 
 	 */
 	
-	
-	public boolean isVaildValue(int postX, int postY, ChessBoard board) {
-		if(board.isPiece(postX, postY) && color == "W" && postY-yPos == 1 || postY-yPos == -1)
-		if(board.isPiece(postX, postY) && color == "W" && postY == yPos-1 && postX == xPos+1)
-			
-		
+	@Override
+	public boolean isVaildValue(int postX, int postY) {	
 		if(isTwoBlockMove == true) {
 			isTwoBlockMove = false;
 			return checkFrontTowBlock(postX, postY);

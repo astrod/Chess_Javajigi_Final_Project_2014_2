@@ -1,3 +1,16 @@
+package Wrapper;
+
+
+import Etc.ChessBoard;
+import Etc.Player;
+import Piece.Bishop;
+import Piece.King;
+import Piece.Night;
+import Piece.Pawn;
+import Piece.Queen;
+import Piece.Rook;
+import Piece.Sentinal;
+
 
 public class Administration {
 	private ChessBoard board;

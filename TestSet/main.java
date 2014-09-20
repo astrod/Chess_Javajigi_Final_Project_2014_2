@@ -1,8 +1,11 @@
+import Wrapper.Administration;
+
 
 public class main {
 
 	public static void main(String[] args) throws Exception {
-		Administration admin = new Administration();	
+		Administration admin = new Administration();
+
 		admin.playerMove(7, 1, 5, 1);
 		admin.playerMove(5, 1, 4, 1);
 		admin.playerMove(4, 1, 3, 1);

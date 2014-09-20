@@ -1,8 +1,10 @@
+package Piece;
 import java.util.LinkedList;
 
 
-public class Bishop extends Piece{
-	public Bishop(int x, int y, String color) {
+public class Queen extends Piece{
+
+	public Queen(int x, int y, String color) {
 		xPos = x;
 		yPos = y;
 		this.color = color;
@@ -12,7 +14,7 @@ public class Bishop extends Piece{
 	public boolean isVaildValue(int postX, int postY) {
 		int yAxisToDonw = xPos+yPos;
 		int yAxisToUp = yPos-xPos;
-		if(postY-postX == yAxisToUp || postY+postX == yAxisToDonw) return true;
+		if(postY-postX == yAxisToUp || postY+postX == yAxisToDonw || postX == xPos || postY == yPos) return true;
 		return false;
 	}
 }
