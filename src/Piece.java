@@ -36,30 +36,29 @@ public abstract class Piece {
 		return this.color + this.getClass().toString().split(" ")[1].charAt(0);
 	}
 	
-	public LinkedList<Integer> calculateGredient(int postX, int postY) {
-		LinkedList <Integer> array = new LinkedList<Integer>();
-		int gredient = 0;
-		int flag = 0;
-		try {
-			gredient = (postX-xPos)/(postY-yPos);
-			if(gredient == 0) flag = postY - yPos;			
-			else flag = postX - xPos;
-		} catch(ArithmeticException e) {
-			gredient = INFI;
-			flag = postX - xPos;
-		} finally {
-			array.push(flag);
-			array.push(gredient);			
-		}
-		return array;
-	}
+//	public LinkedList<Integer> calculateGredient(int postX, int postY) {
+//		LinkedList <Integer> array = new LinkedList<Integer>();
+//		int gredient = 0;
+//		int flag = 0;
+//		try {
+//			gredient = (postX-xPos)/(postY-yPos);
+//			if(gredient == 0) flag = postY - yPos;			
+//			else flag = postX - xPos;
+//		} catch(ArithmeticException e) {
+//			gredient = INFI;
+//			flag = postX - xPos;
+//		} finally {
+//			array.push(flag);
+//			array.push(gredient);			
+//		}
+//		return array;
+//	}
 	//입력된 값이 유효하면 true, 아니면 false
 	public abstract boolean isVaildValue(int postX, int postY);
 	//장애물이 존재하면 true, 없으면 false
-	public boolean isObstacle(int postX, int postY, ChessBoard board) {
-		LinkedList<Integer> array = this.calculateGredient(postX, postY);
-		int gredient = array.pop();
-		int flag = array.pop();
+	public boolean isObstacle(int postX, int postY) {
+		
+		
 		Direction dir = Direction.giveObject(gredient, flag);
 		return board.search(dir, xPos, yPos, postX, postY);		
 	}

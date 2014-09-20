@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+
 
 public class PrintMap {
 
-	public void print(Piece [][] array) {
+	public void print(Block [][] array) {
 		
 		for(int i=1; i<9; i++) {
 			for(int j=1; j<9; j++) {

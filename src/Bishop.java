@@ -14,6 +14,5 @@ public class Bishop extends Piece{
 		int yAxisToUp = yPos-xPos;
 		if(postY-postX == yAxisToUp || postY+postX == yAxisToDonw) return true;
 		return false;
-		
 	}
 }
