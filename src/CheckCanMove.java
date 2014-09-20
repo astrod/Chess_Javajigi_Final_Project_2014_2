@@ -21,9 +21,8 @@ public class CheckCanMove {
 	
 	//폰이 앞으로 두 칸 이동할 수 있는가?
 	public boolean checkPawnFirstMove(int x, int y, Pawn target) {
-		return target.checkFrontTowBlock(x, y);
+		return false;
+//		return target.checkFrontTowBlock(x, y);
 	}
-	
-	
 }
 
