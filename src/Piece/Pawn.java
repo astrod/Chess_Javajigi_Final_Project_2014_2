@@ -1,7 +1,6 @@
 package Piece;
 import java.io.IOException;
 
-import Exceptions.*;
 import Etc.PawnPromotionValue;
 import Map.ChessBoard;
 

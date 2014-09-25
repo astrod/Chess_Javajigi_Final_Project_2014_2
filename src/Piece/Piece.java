@@ -1,6 +1,5 @@
 package Piece;
 import Directions.Direction;
-import Exceptions.InvalidMoveExecption;
 import Map.ChessBoard;
 
 

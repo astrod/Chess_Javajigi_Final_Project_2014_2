@@ -1,6 +1,5 @@
 package Etc;
 import Exceptions.AttackAllianceExecption;
-import Exceptions.InvalidMoveExecption;
 import Exceptions.PickOtherPlayerPieceException;
 import Map.ChessBoard;
 import Piece.Piece;
