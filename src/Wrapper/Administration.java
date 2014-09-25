@@ -1,8 +1,11 @@
 package Wrapper;
 
 
-import Etc.ChessBoard;
+import java.util.Scanner;
+
 import Etc.Player;
+import Exceptions.PickOtherPlayerPieceException;
+import Map.ChessBoard;
 import Piece.Bishop;
 import Piece.King;
 import Piece.Night;
@@ -14,21 +17,34 @@ import Piece.Sentinal;
 
 public class Administration {
 	private ChessBoard board;
+	private boolean turnFlag = true;
 	private Player playerOne;
 	private Player playerTwo;
 	
 	public Administration() {
 		board = new ChessBoard();
-		playerOne = new Player();
-		playerTwo = new Player();
+		playerOne = new Player("W");
+		playerTwo = new Player("B");
 		makePieces();
 	}
 	
-	public void playerMove(int preX, int preY, int x, int y) throws Exception {
-		playerOne.movePiece(preX, preY, x, y, board);
-		printMap();
+	public void playerMove(int preX, int preY, int x, int y) {
+		try {
+			if(turnFlag == true){
+				System.out.println("Black Turn");
+				playerOne.movePiece(preX, preY, x, y, board);			
+				turnFlag = false;
+			} else {
+				System.out.println("White Turn");
+				playerTwo.movePiece(preX, preY, x, y, board);
+				turnFlag = true;
+			}			
+		}catch(PickOtherPlayerPieceException e) {
+			System.out.println("에러 메시지 : " + e.getMessage());
+		}
+		
 	}
-	
+
 	private void makePieces() {
 		makePawn();
 		makeRook();
@@ -56,10 +72,10 @@ public class Administration {
 	}
 
 	private void makePawn() {
-//		for(int i=1; i<9; i++) {
-//			Pawn p = new Pawn(1, i, "B");
-//			board.setPiece(1, i, p);
-//		}
+		for(int i=1; i<9; i++) {
+			Pawn p = new Pawn(2, i, "B");
+			board.setPiece(2, i, p);
+		}
 		for(int i=1; i<9; i++) {
 			Pawn p = new Pawn(7, i, "W");
 			board.setPiece(7, i, p);
@@ -124,6 +140,46 @@ public class Administration {
 	
 	public void printMap() {
 		board.printArray();
+	}
+
+	public void playGame() throws Exception {
+		String message;
+		Scanner scan = new Scanner(System.in);
+		board.printArray();
+		System.out.println("메시지를 입력하세요. 1,2,4,7과 같이 입력하시면 됩니다. 전자는 움직이고 싶은 말이고 후자는 움직일 위치입니다. 흰색부터 먼저 시작해서 번갈아가면서 하면 됩니다. 게임을 종료하시려면 exit를 입력해 주세요.");
+		while(true) {
+			if(!checkKingaLive()) {
+				System.out.println("게임이 종료되었습니다.");
+				break;
+			}
+			message =scan.nextLine();
+			if(splitMessage(message)) {
+				System.out.println("게임이 종료되었습니다.");
+				break;
+			}
+			printMap();
+		}
+		
+	}
+
+	private boolean checkKingaLive() {
+		return board.checkKingAlive();
+	}
+
+	private boolean splitMessage(String message) {
+		if(message.equals("end")) return true;
+		try {
+			String[] array =message.split(",");
+			int preX = Integer.parseInt(array[0]);
+			int preY = Integer.parseInt(array[1]);
+			int postX = Integer.parseInt(array[2]);
+			int postY = Integer.parseInt(array[3]);
+			
+			playerMove(preX, preY, postX, postY);			
+		} catch(Exception e) {
+			System.out.println("에러 메시지 : " + e.getMessage());
+		}
+		return false;
 	}
 	
 	

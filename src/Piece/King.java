@@ -1,5 +1,6 @@
 package Piece;
-import java.util.LinkedList;
+
+import Map.ChessBoard;
 
 
 public class King extends Piece{
@@ -11,7 +12,7 @@ public class King extends Piece{
 	}
 
 	@Override
-	public boolean isVaildValue(int postX, int postY) {
+	public boolean isVaildValue(int postX, int postY, ChessBoard board) {
 			int flag = (xPos-postX)*(xPos-postX)+(yPos-postY)*(yPos-postY);
 			if(flag == 1 || flag == 2) return true;
 			return false;

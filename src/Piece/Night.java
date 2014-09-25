@@ -1,5 +1,5 @@
 package Piece;
-import Etc.ChessBoard;
+import Map.ChessBoard;
 
 
 public class Night extends Piece{
@@ -11,7 +11,7 @@ public class Night extends Piece{
 	}
 
 	@Override
-	public boolean isVaildValue(int postX, int postY) {
+	public boolean isVaildValue(int postX, int postY, ChessBoard board) {
 		if(((postX - xPos)*(postX - xPos) + (postY-yPos)*(postY-yPos)) == 5) return true;
 		return false;
 	}

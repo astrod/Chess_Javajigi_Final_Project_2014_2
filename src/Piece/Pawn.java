@@ -1,12 +1,13 @@
 package Piece;
 import java.io.IOException;
 
-import Etc.ChessBoard;
+import Exceptions.*;
 import Etc.PawnPromotionValue;
-import Exceptions.AttackAllianceExecption;
+import Map.ChessBoard;
 
 public class Pawn extends Piece{
 	private boolean isTwoBlockMove;
+	private boolean frontStraight = true;
 	
 	public Pawn(int x, int y, String color) {
 		isTwoBlockMove = true;
@@ -19,44 +20,57 @@ public class Pawn extends Piece{
 	private boolean checkFrontTowBlock(int x, int y) {
 		if(color == "W" && y == yPos && (x-xPos == -1 || x-xPos == -2)) return true;
 		if(color == "B" && y == yPos && (x-xPos == 1 || x-xPos ==2)) return true;
+		frontStraight = false;
 		return false;
 	}
 	private boolean checkFrontOneBlock(int x, int y) {
 		if(color == "W" && y == yPos && x-xPos == -1) return true;
 		if(color == "B" && y == yPos && x-xPos == 1) return true;
+		frontStraight = false;
 		return false;
 	}
 
-	/* 값이 유효한 지 검증하는 메서
-	 * 1. 입력된 값이 앞으로 두 칸, 혹은 앞으로 한 칸이어야 한다.
-	 * 2. 대각선에 적의 말이 있다면 먹을 수 있다.
-	 * 3. 내 말이 
+	/* 실제로 유효한 것 : 대각선에 말이 있는 경우 잡을 수 있어야 한다.
+	 * 구현해야 하는 기능 : 정면에 아군 말이 있으면 갈 수 없게 한다; 대각선에 적군 말이 있으면 움직일 수 있는 곳으로 간주한다.
 	 */
 	
 	@Override
-	public boolean isVaildValue(int postX, int postY) {	
-		if(isTwoBlockMove == true) {
-			isTwoBlockMove = false;
-			return checkFrontTowBlock(postX, postY);
-		} else {
-			return checkFrontOneBlock(postX, postY);
+	public boolean isVaildValue(int postX, int postY, ChessBoard board) {	
+		//입력한 값이 앞으로 가는 것인지 살핀다.
+		if(postY == yPos) {
+			if(isTwoBlockMove == true) {
+				isTwoBlockMove = false;
+				frontStraight = true;
+				return checkFrontTowBlock(postX, postY);
+			} else {
+				frontStraight = true;
+				return checkFrontOneBlock(postX, postY);
+			}
+		}
+		//아닌 경우에는 입력한 값에 적이 있는지 살핀다.
+		else {
+			frontStraight = false;
+			//적이 있다면 true, 아니면 false를 리턴한다.
+			return board.isEnemy(postX, postY, color);
 		}
 	}
 	
 	@Override
 	public void move(int x, int y, ChessBoard board) {
-		try {
-			board.removePreLocation(xPos, yPos, x, y);			
+			//움직이는 위치에 말이 없다
 			if(!board.isPiece(x, y)) {
+				board.clearLocationWithoutExecption(xPos, yPos);			
 				board.setPiece(x, y, this);
 				xPos = x;
 				yPos = y;
-			} else {
+			//움직이면서 대각선의 적을 잡는다
+			} else if(frontStraight == false){
+				board.clearLocationWithoutExecption(xPos, yPos);			
 				kill(x, y, board, this);
-			}						
-		}catch(AttackAllianceExecption e) {
-			System.out.println(e.getMessage());
-		}		
+			//그냥 앞으로 간다. 즉 직선으로 가는데 앞에 적이 있다.
+			} else {
+				throw new IllegalArgumentException("그 방향으로 적을 공격할 수 없습니다.");
+			}
 		if(xPos == 1 || xPos == 8) {
 			while(true) {
 				try {

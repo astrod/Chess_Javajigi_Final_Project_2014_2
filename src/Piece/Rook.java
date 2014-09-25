@@ -1,5 +1,6 @@
 package Piece;
-import java.util.LinkedList;
+
+import Map.ChessBoard;
 
 
 public class Rook extends Piece{
@@ -11,7 +12,7 @@ public class Rook extends Piece{
 	}
 
 	@Override
-	public boolean isVaildValue(int postX, int postY) {
+	public boolean isVaildValue(int postX, int postY, ChessBoard board) {
 		if(xPos == postX || yPos == postY) return true;
 		return false;
 	}
