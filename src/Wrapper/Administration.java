@@ -167,7 +167,7 @@ public class Administration {
 	}
 
 	private boolean splitMessage(String message) {
-		if(message.equals("end")) return true;
+		if(message.equals("exit")) return true;
 		try {
 			String[] array =message.split(",");
 			int preX = Integer.parseInt(array[0]);
